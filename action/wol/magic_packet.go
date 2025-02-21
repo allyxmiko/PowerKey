@@ -36,7 +36,7 @@ func createPayload(addr MacAddr) (payload [16]MacAddr) {
 }
 
 func (mp *MagicPacket) Bytes() []byte {
-	buf := make([]byte, 0, 6+16*6) // 预分配精确长度
+	buf := make([]byte, 0, 6+16*6)
 	buf = append(buf, mp.header[:]...)
 	for _, mac := range mp.payload {
 		buf = append(buf, mac[:]...)
