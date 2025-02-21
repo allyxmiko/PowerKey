@@ -16,11 +16,10 @@ func Shutdown(username, password, ip string, delay int) error {
 		"net",
 		"rpc",
 		"shutdown",
-		"-f",
 		"-t", strconv.Itoa(delay),
-		"-C", fmt.Sprintf("设备将于%d秒后关闭", delay),
+		"-I", ip,
 		"-U", username+"%"+password,
-		"-I", ip)
+		"-C", fmt.Sprintf("此设备将于%d秒后关闭", delay))
 	output, err := cmd.Output()
 	if err != nil {
 		return err
