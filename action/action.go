@@ -30,3 +30,16 @@ func Shutdown(username, password, ip string, delay int) error {
 	}
 	return nil
 }
+
+func Ping(ip string) error {
+	cmd := exec.Command("ping", "-c", "1", ip)
+	output, err := cmd.Output()
+	if err != nil {
+		return err
+	}
+	result := string(output)
+	if !strings.Contains(result, "ttl") {
+		return errors.New(result)
+	}
+	return nil
+}
