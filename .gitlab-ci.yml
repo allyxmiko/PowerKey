@@ -1,0 +1,22 @@
+image: docker:dind
+
+variables:
+  tag: power-key:latest
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  before_script:
+    - docker container rm -f PowerKey > /dev/null 2>&1 || true
+    - docker image rm -f $tag > /dev/null 2>&1 || true
+  script:
+    - docker build -t $tag .
+
+
+deploy-job:
+  stage: deploy
+  script:
+    - docker run -d -p 3000:3000 --name PowerKey -v /www/software/PowerKey/config:/app/config $tag

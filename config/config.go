@@ -63,5 +63,5 @@ func createConfigFile() error {
 func getExecutablePath() string {
 	exePath, _ := os.Executable()
 	exeDir := filepath.Dir(exePath)
-	return exeDir
+	return filepath.Join(exeDir, "config")
 }
