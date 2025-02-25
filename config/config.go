@@ -1,6 +1,7 @@
 package config
 
 import (
+	"PowerKey/model"
 	_ "embed"
 	"errors"
 	"github.com/spf13/viper"
@@ -12,17 +13,7 @@ import (
 //go:embed config.yaml
 var defaultConfigContent []byte
 
-type AppConfig struct {
-	Server ServerConfig
-}
-
-type ServerConfig struct {
-	Port  int
-	Auth  bool
-	Token string
-}
-
-var App AppConfig
+var App model.AppConfig
 var configPath = getExecutablePath()
 
 func Init() error {
