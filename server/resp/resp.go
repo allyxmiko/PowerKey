@@ -34,7 +34,7 @@ var ErrorMsg = map[int]string{
 const (
 	OK            = 0
 	DeviceOffline = 1
-	TokenNotFound = iota + 10000
+	TokenNotFound = iota + 9999
 	Unauthorized
 	InvalidQueryParam
 	DeviceNotFound
