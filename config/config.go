@@ -4,6 +4,7 @@ import (
 	"PowerKey/model"
 	_ "embed"
 	"errors"
+	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"log/slog"
 	"os"
@@ -20,19 +21,29 @@ func Init() error {
 	viper.AddConfigPath(configPath)
 	viper.SetConfigName("config.yaml")
 	viper.SetConfigType("yaml")
-	if err := viper.ReadInConfig(); err != nil {
+	if err := readConfigFile(); err != nil {
 		if errors.As(err, &viper.ConfigFileNotFoundError{}) {
 			slog.Info("未找到配置文件...已生成默认配置文件，请修改后重新启动程序。")
 			if err := createConfigFile(); err != nil {
 				return err
 			}
+			os.Exit(1)
 		}
 		return err
 	}
-	if err := viper.Unmarshal(&App); err != nil {
+	viper.OnConfigChange(func(e fsnotify.Event) {
+		readConfigFile()
+		slog.Info("配置文件已更新")
+	})
+	viper.WatchConfig()
+	return nil
+}
+
+func readConfigFile() error {
+	if err := viper.ReadInConfig(); err != nil {
 		return err
 	}
-	return nil
+	return viper.Unmarshal(&App)
 }
 
 func createConfigFile() error {
