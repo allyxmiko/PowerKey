@@ -2,14 +2,13 @@ package main
 
 import (
 	"PowerKey/config"
-	"fmt"
+	"PowerKey/server"
 )
 
 func init() {
-	err := config.Init()
-	fmt.Println(err)
+	config.Init()
 }
 
 func main() {
-	println(config.App.Server.Token)
+	server.Init()
 }
