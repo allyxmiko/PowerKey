@@ -8,6 +8,9 @@ import (
 )
 
 func BaseAuth(c *fiber.Ctx) error {
+	if !config.App.Server.Auth {
+		return c.Next()
+	}
 	token := strings.TrimSpace(c.Query("token"))
 	if token == "" {
 		return c.JSON(resp.Err(resp.TokenNotFound))
@@ -23,10 +26,12 @@ func ParamCheck(c *fiber.Ctx) error {
 	if deviceName == "" {
 		return c.JSON(resp.Err(resp.InvalidQueryParam))
 	}
-	device, exists := config.App.Devices[deviceName]
-	if !exists {
-		return c.JSON(resp.Err(resp.DeviceNotFound))
+
+	for _, device := range config.App.Devices {
+		if device.Name == deviceName {
+			c.Locals("device", device)
+			return c.Next()
+		}
 	}
-	c.Locals("device", device)
-	return c.Next()
+	return c.JSON(resp.Err(resp.DeviceNotFound))
 }

@@ -1,9 +1,10 @@
 package model
 
 type Device struct {
-	IP       string `yaml:"ip"`
-	Mac      string `yaml:"mac"`
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
-	Delay    int    `yaml:"delay"`
+	Name     string `yaml:"name" validate:"required"`
+	IP       string `yaml:"ip" validate:"required,ip"`
+	Mac      string `yaml:"mac" validate:"required,mac"`
+	Username string `yaml:"username" validate:"required"`
+	Password string `yaml:"password" validate:"required"`
+	Delay    int    `yaml:"delay" validate:"required,gte=0"`
 }
