@@ -6,7 +6,7 @@ server:
 devices:
   - name: 我的电脑1
     ip: 192.168.1.240
-    mac: 4C-10-D5-81-CF-EsF
+    mac: 4C-10-D5-81-CF-EF
     username: winrm
     password: 806906623
     delay: 10
