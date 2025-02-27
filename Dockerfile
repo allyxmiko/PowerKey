@@ -21,7 +21,7 @@ RUN go mod download
 
 COPY . .
 
-COPY --from=frontend-builder /app/web/dist /app/server/web
+COPY --from=frontend-builder /app/web/dist /app/server/static
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o /app/PowerKey .
 

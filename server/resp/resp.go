@@ -3,21 +3,27 @@ package resp
 type Resp struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
+	Data any    `json:"data"`
 }
 
-func NewResp(code int, msg string) Resp {
+func NewResp(code int, msg string, data any) Resp {
 	return Resp{
 		code,
 		msg,
+		data,
 	}
 }
 
 func Ok(msg string) Resp {
-	return NewResp(OK, msg)
+	return NewResp(OK, msg, nil)
+}
+
+func Data(data any) Resp {
+	return NewResp(OK, "请求成功!", data)
 }
 
 func Err(code int) Resp {
-	return NewResp(code, ErrorMsg[code])
+	return NewResp(code, ErrorMsg[code], nil)
 }
 
 var ErrorMsg = map[int]string{

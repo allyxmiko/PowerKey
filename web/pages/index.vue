@@ -1,12 +1,13 @@
 <script setup lang="ts">
-const ping = async () => {
-  const res = await $fetch('/api/action/ping')
-  console.log(res)
-}
+const router = useRouter()
+
+onMounted(() => {
+  router.push('/login')
+})
 </script>
 
 <template>
-  <el-button type="primary" @click="ping">Ping</el-button>
+  <el-button type="primary">Ping</el-button>
 </template>
 
 <style lang="scss" scoped></style>
