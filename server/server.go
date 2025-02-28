@@ -10,8 +10,6 @@ import (
 	"net/http"
 )
 
-var port string
-
 func Init() {
 	app := fiber.New()
 
