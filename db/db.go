@@ -1,17 +1,16 @@
-package database
+package db
 
 import (
-	"PowerKey/global"
 	"PowerKey/model"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"time"
 )
 
+var DB *gorm.DB
+
 func Init() error {
-	// TODO 上线后更改为sqlite
-	dsn := "power_key_dev:YZDEmtDPYDZw5KAw@tcp(192.168.1.166:3306)/power_key_dev?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("./test.db"), &gorm.Config{})
 	if err != nil {
 		return err
 	}
@@ -29,7 +28,7 @@ func Init() error {
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
-	global.DB = db
+	DB = db
 
 	return nil
 }

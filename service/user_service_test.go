@@ -1,14 +1,14 @@
 package service
 
 import (
-	"PowerKey/database"
+	"PowerKey/db"
 	"testing"
 )
 
 var userService IUserService
 
 func init() {
-	err := database.Init()
+	err := db.Init()
 	if err != nil {
 		return
 	}

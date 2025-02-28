@@ -1,19 +1,23 @@
 package server
 
 import (
+	"PowerKey/config"
 	"PowerKey/server/api"
-	"PowerKey/server/middleware"
 	"PowerKey/server/static"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"net/http"
 )
 
+var port string
+
 func Init() {
 	app := fiber.New()
 
 	v1 := app.Group("/api")
-	action := v1.Group("/action", middleware.BaseAuth, middleware.ParamCheck)
+
+	action := v1.Group("/action")
 	action.Get("/wol", api.ExecuteWol)
 	action.Get("/shutdown", api.ExecuteShutdown)
 	action.Get("/ping", api.ExecutePing)
@@ -25,5 +29,5 @@ func Init() {
 		Root: http.FS(static.Root),
 	}))
 
-	app.Listen(":3000")
+	app.Listen(fmt.Sprintf(":%d", config.Port))
 }

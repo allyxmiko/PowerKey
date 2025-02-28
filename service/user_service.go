@@ -1,12 +1,15 @@
 package service
 
 import (
-	"PowerKey/global"
+	"PowerKey/db"
 	"PowerKey/model"
 	"PowerKey/utils"
+	"gorm.io/gorm"
 )
 
-type UserService struct{}
+type UserService struct {
+	db *gorm.DB
+}
 
 type IUserService interface {
 	FindByUsername(username string) (model.User, error)
@@ -14,14 +17,16 @@ type IUserService interface {
 }
 
 func NewUserService() IUserService {
-	return &UserService{}
+	return &UserService{
+		db: db.DB,
+	}
 }
 
 func (u UserService) FindByUsername(username string) (model.User, error) {
 	user := model.User{
 		Username: username,
 	}
-	result := global.DB.First(&user)
+	result := u.db.First(&user)
 	return user, result.Error
 }
 
@@ -30,5 +35,5 @@ func (u UserService) UpdatePassword(username, password string) error {
 		Username: username,
 		Password: utils.HashPassword(password),
 	}
-	return global.DB.Save(&user).Error
+	return u.db.Save(&user).Error
 }
