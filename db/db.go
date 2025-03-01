@@ -32,7 +32,7 @@ func Init() error {
 	DB = db
 
 	if err := db.First(&model.User{Username: "admin"}); err != nil {
-		db.Create(&model.User{
+		db.Save(&model.User{
 			Username: "admin",
 			Token:    utils.RandomString(32),
 			Password: utils.HashPassword("admin"),
