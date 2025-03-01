@@ -7,7 +7,7 @@ import (
 	"log/slog"
 )
 
-func init() {
+func main() {
 	var err error
 
 	err = config.Init()
@@ -20,8 +20,5 @@ func init() {
 		slog.Error("初始化数据库失败！", err)
 		return
 	}
-}
-
-func main() {
 	server.Init()
 }

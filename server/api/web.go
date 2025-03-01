@@ -3,6 +3,7 @@ package api
 import (
 	"PowerKey/config"
 	"PowerKey/model/dto"
+	"PowerKey/model/vo"
 	"PowerKey/server/resp"
 	"PowerKey/utils"
 	"github.com/gofiber/fiber/v2"
@@ -21,6 +22,6 @@ func HandleLogin(c *fiber.Ctx) error {
 	if !utils.ComparePasswords(user.Password, loginDto.Password) {
 		return c.JSON(resp.Err(resp.PasswordNotMatch))
 	}
-
-	return c.JSON(resp.Data(loginDto))
+	token := utils.CreateJwt(config.Username)
+	return c.JSON(resp.Data(vo.LoginVo{Token: token}))
 }

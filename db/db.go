@@ -2,6 +2,7 @@ package db
 
 import (
 	"PowerKey/model"
+	"PowerKey/utils"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"time"
@@ -29,6 +30,14 @@ func Init() error {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	DB = db
+
+	if err := db.First(&model.User{Username: "admin"}); err != nil {
+		db.Create(&model.User{
+			Username: "admin",
+			Token:    utils.RandomString(32),
+			Password: utils.HashPassword("admin"),
+		})
+	}
 
 	return nil
 }
