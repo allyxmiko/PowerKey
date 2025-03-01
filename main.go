@@ -10,7 +10,11 @@ import (
 func init() {
 	var err error
 
-	config.Init()
+	err = config.Init()
+	if err != nil {
+		slog.Error("配置文件初始化失败！", err)
+		return
+	}
 
 	if err = db.Init(); err != nil {
 		slog.Error("初始化数据库失败！", err)

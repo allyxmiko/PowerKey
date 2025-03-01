@@ -35,6 +35,8 @@ var ErrorMsg = map[int]string{
 	10005: "操作执行出现错误！",
 	10006: "设备未配置MAC地址，无法执行此操作！",
 	10007: "未配置设备信息！",
+	10008: "未查找到此用户！",
+	10009: "密码错误！",
 }
 
 const (
@@ -47,4 +49,6 @@ const (
 	ActionExecuteFailed
 	MacNotFound
 	MissingConfiguration
+	UserNotFound
+	PasswordNotMatch
 )

@@ -1,12 +1,12 @@
 package server
 
 import (
-	"PowerKey/config"
 	"PowerKey/server/api"
 	"PowerKey/server/static"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	"github.com/spf13/viper"
 	"net/http"
 )
 
@@ -27,5 +27,5 @@ func Init() {
 		Root: http.FS(static.Root),
 	}))
 
-	app.Listen(fmt.Sprintf(":%d", config.Port))
+	app.Listen(fmt.Sprintf(":%d", viper.GetInt("server.port")))
 }

@@ -12,7 +12,7 @@ type UserService struct {
 }
 
 type IUserService interface {
-	FindByUsername(username string) (model.User, error)
+	FindUserByUsername(username string) (model.User, error)
 	UpdatePassword(username, password string) error
 }
 
@@ -22,7 +22,7 @@ func NewUserService() IUserService {
 	}
 }
 
-func (u UserService) FindByUsername(username string) (model.User, error) {
+func (u UserService) FindUserByUsername(username string) (model.User, error) {
 	user := model.User{
 		Username: username,
 	}
