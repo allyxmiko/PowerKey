@@ -4,7 +4,6 @@ import (
 	"PowerKey/config"
 	"PowerKey/model"
 	"PowerKey/model/dto"
-	"PowerKey/model/vo"
 	"PowerKey/server/resp"
 	"PowerKey/utils"
 	"github.com/gofiber/fiber/v2"
@@ -49,7 +48,7 @@ func HandleUpdateToken(c *fiber.Ctx) error {
 	if err := userService.UpdateToken(config.Username, token); err != nil {
 		return c.JSON(resp.Err(resp.UpdateTokenFailed))
 	}
-	return c.JSON(resp.Data(vo.LoginVo{
+	return c.JSON(resp.Data(model.User{
 		Token: token,
 	}))
 }
