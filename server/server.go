@@ -2,6 +2,7 @@ package server
 
 import (
 	"PowerKey/server/api"
+	"PowerKey/server/middleware"
 	"PowerKey/server/static"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
@@ -13,7 +14,7 @@ import (
 func Init() {
 	app := fiber.New()
 
-	v1 := app.Group("/api")
+	v1 := app.Group("/api", middleware.JwtAuth)
 
 	action := v1.Group("/action")
 	action.Get("/wol", api.ExecuteWol)
@@ -24,6 +25,7 @@ func Init() {
 	user.Post("/login", api.HandleLogin)
 	user.Put("/password", api.HandleUpdatePassword)
 	user.Put("/token", api.HandleUpdateToken)
+	user.Get("/verify", api.HandleVerifyToken)
 
 	device := v1.Group("/device")
 	device.Post("/", api.HandleAddDevice)

@@ -51,3 +51,7 @@ func HandleUpdateToken(c *fiber.Ctx) error {
 		Token: token,
 	}))
 }
+
+func HandleVerifyToken(c *fiber.Ctx) error {
+	return c.JSON(resp.Ok("token验证成功！"))
+}
