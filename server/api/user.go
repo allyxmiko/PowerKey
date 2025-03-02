@@ -3,7 +3,6 @@ package api
 import (
 	"PowerKey/config"
 	"PowerKey/model"
-	"PowerKey/model/dto"
 	"PowerKey/server/resp"
 	"PowerKey/utils"
 	"github.com/gofiber/fiber/v2"
@@ -26,15 +25,15 @@ func HandleLogin(c *fiber.Ctx) error {
 }
 
 func HandleUpdatePassword(c *fiber.Ctx) error {
-	var loginDto dto.LoginDto
-	if err := c.BodyParser(&loginDto); err != nil {
+	var user model.User
+	if err := c.BodyParser(&user); err != nil {
 		return c.JSON(resp.Err(resp.InvalidQueryParam))
 	}
 
 	if _, err := userService.FindUserByUsername(config.Username); err != nil {
 		return c.JSON(resp.Err(resp.UserNotFound))
 	}
-	if err := userService.UpdatePassword(config.Username, loginDto.Password); err != nil {
+	if err := userService.UpdatePassword(config.Username, user.Password); err != nil {
 		return c.JSON(resp.Err(resp.UpdatePasswordFailed))
 	}
 	return c.JSON(resp.Ok("修改密码成功！"))

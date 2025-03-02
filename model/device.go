@@ -2,12 +2,12 @@ package model
 
 type Device struct {
 	ID       int    `gorm:"primaryKey" json:"id"`
-	Uid      int    `json:"-" json:"uid"`
-	IP       string `json:"ip" validate:"ip"`
-	Delay    int    `json:"delay" validate:"gte=0"`
-	Name     string `json:"name"`
-	Topic    string `json:"topic" validate:"alphanum"`
-	Password string `json:"password"`
-	Username string `json:"username"`
-	Mac      string `json:"mac"  validate:"mac"`
+	Uid      int    `json:"-"`
+	IP       string `json:"ip" validate:"required,ip"`
+	Delay    int    `json:"delay" validate:"required,gte=0"`
+	Name     string `json:"name" validate:"required"`
+	Topic    string `json:"topic" gorm:"unique" validate:"required,alphanum"`
+	Password string `json:"password" validate:"required"`
+	Username string `json:"username" validate:"required"`
+	Mac      string `json:"mac"  validate:"required,mac"`
 }

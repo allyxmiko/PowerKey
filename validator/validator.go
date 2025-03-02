@@ -26,13 +26,9 @@ func Struct(s interface{}) (map[string]string, error) {
 
 	errs := Validate.Struct(s)
 	if errs != nil {
-		var errsMap map[string]string
-		errsMap = make(map[string]string)
-
 		for _, e := range errs.(validator.ValidationErrors) {
 			errsMap[strings.ToLower(e.Field())] = e.Translate(Trans)
 		}
-
 	}
 	return errsMap, errs
 }
