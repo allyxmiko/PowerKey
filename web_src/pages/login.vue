@@ -1,13 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import userApi from '../api/user'
 
 const password = ref('')
-const hasChecked = ref(false)
 
-const onSubmit = () => {
+const router = useRouter()
+
+const onSubmit = async () => {
   if (password.value === '') {
     ElMessage.error('密码不能为空!')
     return
+  }
+  const res = await userApi.Login(password.value)
+  if (res.code === 0) {
+    ElMessage.success('登录成功!')
+    localStorage.setItem('token', res.data.token)
+    await router.push('/')
+  } else {
+    ElMessage.error('密码错误!')
   }
 }
 </script>
@@ -28,12 +38,7 @@ const onSubmit = () => {
             class="w-full u-font e-height"
           ></el-input>
         </div>
-        <div class="mt-6">
-          <el-checkbox v-model="hasChecked" style="color: #a3a6ad"
-            >记住密码</el-checkbox
-          >
-        </div>
-        <div class="mt-6">
+        <div class="mt-10">
           <el-button
             @click="onSubmit"
             type="primary"

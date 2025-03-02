@@ -7,6 +7,15 @@ export default defineNuxtConfig({
   modules: ['@element-plus/nuxt'],
   css: ['~/assets/styles/main.css'],
 
+  nitro: {
+    devProxy: {
+      '/api': {
+        target: 'http://192.168.1.166:3000/api',
+        changeOrigin: true,
+      },
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
     css: {

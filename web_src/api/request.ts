@@ -22,7 +22,7 @@ class HttpClient {
 
     // 请求拦截器
     this.instance.interceptors.request.use((config) => {
-      // TODO 修改token获取位置
+      config.headers.Authorization = localStorage.getItem('token') || ''
       return config
     })
 
