@@ -2,6 +2,7 @@ package api
 
 import (
 	"PowerKey/config"
+	"PowerKey/model"
 	"PowerKey/model/dto"
 	"PowerKey/model/vo"
 	"PowerKey/server/resp"
@@ -10,7 +11,7 @@ import (
 )
 
 func HandleLogin(c *fiber.Ctx) error {
-	var loginDto dto.LoginDto
+	var loginDto model.User
 	if err := c.BodyParser(&loginDto); err != nil {
 		return c.JSON(resp.Err(resp.InvalidQueryParam))
 	}
@@ -22,7 +23,7 @@ func HandleLogin(c *fiber.Ctx) error {
 		return c.JSON(resp.Err(resp.PasswordNotMatch))
 	}
 	token := utils.CreateJwt(config.Username)
-	return c.JSON(resp.Data(vo.LoginVo{Token: token}))
+	return c.JSON(resp.Data(model.User{Token: token}))
 }
 
 func HandleUpdatePassword(c *fiber.Ctx) error {
