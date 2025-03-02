@@ -16,7 +16,7 @@ func init() {
 }
 
 func TestFindUserByUsername(t *testing.T) {
-	user, err := userService.FindByUsername("admin")
+	user, err := userService.FindUserByUsername("admin")
 	if err != nil {
 		t.Errorf("expected no error, but got: %v", err)
 		return

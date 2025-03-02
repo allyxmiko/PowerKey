@@ -1,7 +1,7 @@
 package model
 
 type Device struct {
-	ID       int    `gorm:"primaryKey" json:"id"`
+	ID       int    `gorm:"primaryKey,autoIncrement" json:"id"`
 	Uid      int    `json:"-"`
 	IP       string `json:"ip" validate:"required,ip"`
 	Delay    int    `json:"delay" validate:"required,gte=0"`

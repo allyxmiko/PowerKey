@@ -22,7 +22,7 @@ func HandleAddDevice(c *fiber.Ctx) error {
 	if user, err := userService.FindUserByUsername(config.Username); err != nil {
 		return c.JSON(resp.Err(resp.UserNotFound))
 	} else {
-		device.ID = user.ID
+		device.Uid = user.ID
 	}
 
 	if err := deviceService.AddDevice(device); err != nil {

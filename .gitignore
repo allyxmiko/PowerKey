@@ -20,8 +20,6 @@ vendor/
 bin/
 pkg/
 
-# Go module files
-go.sum
 
 # IDE specific files
 ## Visual Studio Code
