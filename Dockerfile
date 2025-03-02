@@ -1,13 +1,13 @@
 FROM node:22.14.0-alpine AS frontend-builder
 
-WORKDIR /app/web
+WORKDIR /app/web_src
 
-COPY web/package*.json ./
+COPY web_src/package*.json ./
 
 RUN npm install && \
     npm cache clean --force
 
-COPY web/ .
+COPY web_src/ .
 
 RUN npm run generate
 
@@ -21,9 +21,10 @@ RUN go mod download
 
 COPY . .
 
-COPY --from=frontend-builder /app/web/dist /app/server/static
+COPY --from=frontend-builder /app/web_src/dist /app/server/static
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /app/PowerKey .
+RUN apk add --no-cache musl-dev gcc && \
+    CGO_ENABLED=1 GOOS=linux go build -o /app/PowerKey .
 
 
 FROM alpine:latest
@@ -33,13 +34,9 @@ WORKDIR /app
 ENV TZ=Asia/Shanghai
 
 RUN apk add --no-cache --update samba shadow net-tools libcap tzdata && \
-    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
-    addgroup -S power && \
-    adduser -S power -G power -h /app
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-COPY --from=backend-builder --chown=power:power /app/PowerKey /app/PowerKey
-
-USER power
+COPY --from=backend-builder /app/PowerKey /app/PowerKey
 
 EXPOSE 3000
 
