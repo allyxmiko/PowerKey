@@ -37,6 +37,9 @@ var ErrorMsg = map[int]string{
 	10007: "未配置设备信息！",
 	10008: "未查找到此用户！",
 	10009: "密码错误！",
+	10010: "更新密码失败！",
+	10011: "更新Token失败！",
+	10012: "添加设备失败！",
 }
 
 const (
@@ -51,4 +54,7 @@ const (
 	MissingConfiguration
 	UserNotFound
 	PasswordNotMatch
+	UpdatePasswordFailed
+	UpdateTokenFailed
+	DeviceAddFailed
 )

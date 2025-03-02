@@ -3,5 +3,6 @@ package api
 import "PowerKey/service"
 
 var (
-	userService = service.NewUserService()
+	userService   = service.NewUserService()
+	deviceService = service.NewDeviceService()
 )

@@ -12,6 +12,7 @@ type UserService struct {
 type IUserService interface {
 	FindUserByUsername(username string) (model.User, error)
 	UpdatePassword(username, password string) error
+	UpdateToken(username, token string) error
 }
 
 func NewUserService() IUserService {
@@ -28,8 +29,14 @@ func (u UserService) FindUserByUsername(username string) (model.User, error) {
 
 func (u UserService) UpdatePassword(username, password string) error {
 	user := model.User{
-		Username: username,
 		Password: utils.HashPassword(password),
 	}
-	return db.DB.Save(&user).Error
+	return db.DB.Model(&model.User{Username: username}).Updates(&user).Error
+}
+
+func (u UserService) UpdateToken(username, token string) error {
+	user := model.User{
+		Token: token,
+	}
+	return db.DB.Model(&model.User{Username: username}).Updates(&user).Error
 }
