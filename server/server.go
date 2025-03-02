@@ -28,9 +28,9 @@ func Init() {
 	device := v1.Group("/device")
 	device.Post("/", api.HandleAddDevice)
 	device.Get("/list", api.HandleGetDeviceList)
-	//device.Get("/:id", api.HandleGetDevice)
-	//device.Put("/:id", api.HandleUpdateDevice)
-	//device.Delete("/:id", api.HandleDeleteDevice)
+	device.Get("/:id", api.HandleGetDevice)
+	device.Put("/:id", api.HandleUpdateDevice)
+	device.Delete("/:id", api.HandleDeleteDevice)
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root: http.FS(static.Root),

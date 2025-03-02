@@ -1,8 +1,8 @@
 package model
 
 type Device struct {
-	ID       uint `gorm:"primaryKey"`
-	Uid      uint
+	ID       int `gorm:"primaryKey"`
+	Uid      int
 	IP       string
 	Delay    int
 	Name     string

@@ -5,6 +5,7 @@ import (
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	zhtrans "github.com/go-playground/validator/v10/translations/zh"
+	"strings"
 )
 
 var Validate *validator.Validate
@@ -18,4 +19,20 @@ func Init() error {
 		return err
 	}
 	return nil
+}
+
+func Struct(s interface{}) (map[string]string, error) {
+	errsMap := make(map[string]string)
+
+	errs := Validate.Struct(s)
+	if errs != nil {
+		var errsMap map[string]string
+		errsMap = make(map[string]string)
+
+		for _, e := range errs.(validator.ValidationErrors) {
+			errsMap[strings.ToLower(e.Field())] = e.Translate(Trans)
+		}
+
+	}
+	return errsMap, errs
 }

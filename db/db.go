@@ -15,7 +15,7 @@ func Init() error {
 	if err != nil {
 		return err
 	}
-	err = db.AutoMigrate(&model.User{})
+	err = db.AutoMigrate(&model.User{}, &model.Device{})
 	if err != nil {
 		return err
 	}
